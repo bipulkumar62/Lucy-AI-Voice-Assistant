@@ -1,120 +1,123 @@
 Lucy — AI Voice Assistant
 
-Lucy is a lightweight Python voice assistant that provides voice-controlled commands, web automation, and AI-powered responses.
+Lucy is a lightweight Python voice assistant for hands-free web navigation, local command execution, and AI-powered questions. Say “Lucy”, speak a command, and receive a spoken response.
+
+
+
 
 Features
-Wake-word detection using Lucy
-Voice command processing
-Speech recognition
-Text-to-speech responses
-Web and browser automation
-AI-powered responses
-Environment-based configuration
-Architecture
-Local Command
-AI Query
-Microphone
-Speech Recognition
-Command Processing
-Command Type
-Web / System Action
-AI Response
-Text-to-Speech
-Voice Output
-Project Structure
-Lucy---AI-Voice-Assistant/
-│
-├── main.py
-├── mychannels.py
-├── requirements.txt
-├── .gitignore
-├── LICENSE
-└── README.md
 
-File	Description
-main.py	Main application
-mychannels.py	Web and channel actions
-requirements.txt	Project dependencies
-.gitignore	Files excluded from Git
-LICENSE	Project license
-Requirements
-Python 3.9+
-Working microphone
+Wake-word activation with “Lucy”
+
+Speech-to-text command capture
+
+Text-to-speech responses
+
+Web and browser automation
+
+Local command handling
+
+AI-powered answers for general questions
+
+Environment-based configuration for sensitive values
+
+How It Works
+
+flowchart TD
+    A[Microphone input] --> B[Speech recognition]
+    B --> C{Wake word detected?}
+    C -- No --> A
+    C -- Yes --> D[Extract spoken command]
+    D --> E{Classify intent}
+    E -- Local command --> F[Run local action]
+    E -- Web command --> G[Open web resource]
+    E -- AI question --> H[Request AI response]
+    F --> I[Build response]
+    G --> I
+    H --> I
+    I --> J[Text-to-speech]
+    J --> K[Voice output]
+
+Project Structure
+
+Lucy---AI-Voice-Assistant/
+├── main.py           # Application entry point
+├── mychannels.py     # Web and channel actions
+├── requirements.txt  # Python dependencies
+├── .gitignore        # Git exclusion rules
+├── LICENSE           # MIT license
+└── README.md          # Project documentation
+
+Prerequisites
+
+Python 3.9 or later
+
+A working microphone
+
 Speakers or headphones
-Internet connection
+
+An internet connection for web and AI features
+
 Installation
-1. Clone the repository
+
+Clone the repository:
+
 git clone https://github.com/bipulkumar62/Lucy---AI-Voice-Assistant.git
 cd Lucy---AI-Voice-Assistant
 
-2. Create a virtual environment
+Create and activate a virtual environment:
 
-Windows
+Windows (PowerShell)
 
 python -m venv .venv
-.venv\Scripts\Activate.ps1
-
+.\.venv\Scripts\Activate.ps1
 
 macOS / Linux
 
 python3 -m venv .venv
 source .venv/bin/activate
 
-3. Install dependencies
-pip install -r requirements.txt
+Install the dependencies:
 
-4. Configure the application
+python -m pip install -r requirements.txt
 
-Create a local .env file and add the required configuration values used by the application.
+Create a .env file in the project root and add the configuration values required by your implementation:
 
-Do not commit .env or any credentials to the repository.
+# Add required API keys and configuration here.
+
+Never commit .env or expose credentials in source code.
 
 Usage
 
-Run the application:
+Start Lucy:
 
 python main.py
 
+Say “Lucy”, followed by a command. For example:
 
-Say:
-
-Lucy
-
-
-After activation, speak a supported command.
-
-Examples
 Lucy, open Google
 Lucy, open GitHub
 Lucy, open YouTube
 Lucy, open Bugatti
 Lucy, what is quantum computing?
 
+The available commands depend on the actions and services configured in the project.
 
-Available commands depend on the configuration and implementation of the project.
+Troubleshooting
+
+Lucy cannot hear you: Confirm that the correct microphone is selected and that terminal microphone permission is enabled.
+
+No voice response: Check the system volume and verify that a text-to-speech voice is available.
+
+A web or AI command fails: Confirm the internet connection and check the values in .env.
+
+A module is missing: Reactivate the virtual environment and rerun python -m pip install -r requirements.txt.
 
 Security
 
-Keep sensitive configuration outside the source code.
-
-The following files should remain local and should not be committed:
-
-.env
-.venv/
-
-
-A suitable .gitignore should include:
+Keep API keys, tokens, passwords, and other secrets in .env. At minimum, ensure .gitignore contains:
 
 .env
 .venv/
 __pycache__/
 *.py[cod]
-
-
-Never store API keys, passwords, tokens, or other credentials directly in the source code or README.
-
-License
-
-This project is licensed under the MIT License.
-
-See the LICENSE file for details.
