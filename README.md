@@ -1,123 +1,174 @@
-Lucy — AI Voice Assistant
+<div align="center">
 
-Lucy is a lightweight Python voice assistant for hands-free web navigation, local command execution, and AI-powered questions. Say “Lucy”, speak a command, and receive a spoken response.
+# 🎙️ Lucy — AI Voice Assistant
 
+A lightweight Python voice assistant powered by **Google Gemini 2.5 Flash**, voice recognition, browser automation, and text-to-speech.
 
+![Python](https://img.shields.io/badge/Python-3.9+-3776AB?style=for-the-badge\&logo=python\&logoColor=white)
+![Gemini](https://img.shields.io/badge/Gemini-2.5_Flash-8E75B2?style=for-the-badge\&logo=googlegemini\&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-22C55E?style=for-the-badge)
 
+</div>
 
-Features
+---
 
-Wake-word activation with “Lucy”
+## Overview
 
-Speech-to-text command capture
+Lucy listens for the **“Lucy”** wake word, converts speech into text, and routes the command to either a browser automation or Gemini. The result is delivered as a spoken response using `pyttsx3`.
 
-Text-to-speech responses
+---
 
-Web and browser automation
+## Features
 
-Local command handling
+* Wake-word activation using **“Lucy”**
+* Google speech recognition
+* Gemini 2.5 Flash integration
+* Browser and channel automation
+* Text-to-speech responses
+* Environment-based API-key protection
 
-AI-powered answers for general questions
+---
 
-Environment-based configuration for sensitive values
+## System Architecture
 
-How It Works
-
+```mermaid
 flowchart TD
-    A[Microphone input] --> B[Speech recognition]
-    B --> C{Wake word detected?}
-    C -- No --> A
-    C -- Yes --> D[Extract spoken command]
-    D --> E{Classify intent}
-    E -- Local command --> F[Run local action]
-    E -- Web command --> G[Open web resource]
-    E -- AI question --> H[Request AI response]
-    F --> I[Build response]
-    G --> I
+    A[User voice] --> B[Microphone capture]
+    B --> C[Google speech recognition]
+    C --> D{Lucy detected?}
+
+    D -- No --> B
+    D -- Yes --> E[Command parser]
+
+    E --> F{Command type}
+    F -- Browser command --> G[Web and channel automation]
+    F -- General question --> H[Gemini 2.5 Flash]
+
+    G --> I[Response handler]
     H --> I
-    I --> J[Text-to-speech]
-    J --> K[Voice output]
 
-Project Structure
+    I --> J[pyttsx3 speech engine]
+    J --> K[Spoken response]
+```
 
+---
+
+## Technology Stack
+
+| Technology                | Purpose                            |
+| ------------------------- | ---------------------------------- |
+| Python                    | Core application                   |
+| SpeechRecognition         | Converts voice input into text     |
+| Google Speech Recognition | Processes microphone audio         |
+| Gemini 2.5 Flash          | Generates AI responses             |
+| google-genai              | Connects the application to Gemini |
+| pyttsx3                   | Converts responses into speech     |
+| python-dotenv             | Loads environment variables        |
+| webbrowser                | Opens websites and media links     |
+
+---
+
+## Project Structure
+
+```text
 Lucy---AI-Voice-Assistant/
-├── main.py           # Application entry point
-├── mychannels.py     # Web and channel actions
-├── requirements.txt  # Python dependencies
-├── .gitignore        # Git exclusion rules
-├── LICENSE           # MIT license
-└── README.md          # Project documentation
+├── main.py              # Voice recognition and command processing
+├── mychannels.py        # Website and media channel mappings
+├── requirements.txt     # Python dependencies
+├── .env                 # Gemini API key — not committed
+├── .gitignore           # Git exclusion rules
+├── LICENSE              # MIT License
+└── README.md            # Project documentation
+```
 
-Prerequisites
+---
 
-Python 3.9 or later
+## Installation
 
-A working microphone
+### 1. Clone the Repository
 
-Speakers or headphones
-
-An internet connection for web and AI features
-
-Installation
-
-Clone the repository:
-
+```bash
 git clone https://github.com/bipulkumar62/Lucy---AI-Voice-Assistant.git
 cd Lucy---AI-Voice-Assistant
+```
 
-Create and activate a virtual environment:
+### 2. Create a Virtual Environment
 
-Windows (PowerShell)
+#### Windows PowerShell
 
+```powershell
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
+```
 
-macOS / Linux
+#### macOS or Linux
 
+```bash
 python3 -m venv .venv
 source .venv/bin/activate
+```
 
-Install the dependencies:
+### 3. Install Dependencies
 
+```bash
 python -m pip install -r requirements.txt
+```
 
-Create a .env file in the project root and add the configuration values required by your implementation:
+### 4. Configure Gemini
 
-# Add required API keys and configuration here.
+Create a `.env` file in the project directory:
 
-Never commit .env or expose credentials in source code.
+```dotenv
+GEMINI_API_KEY=your_gemini_api_key
+```
 
-Usage
+Create a Gemini API key from [Google AI Studio](https://aistudio.google.com/app/apikey).
+
+---
+
+## Usage
 
 Start Lucy:
 
+```bash
 python main.py
+```
 
-Say “Lucy”, followed by a command. For example:
+Say **“Lucy”** followed by a command.
 
-Lucy, open Google
-Lucy, open GitHub
-Lucy, open YouTube
-Lucy, open Bugatti
-Lucy, what is quantum computing?
+| Voice command                      | Action                                  |
+| ---------------------------------- | --------------------------------------- |
+| `Lucy, open Google`                | Opens Google                            |
+| `Lucy, open GitHub`                | Opens the configured GitHub profile     |
+| `Lucy, open YouTube`               | Opens the configured YouTube channel    |
+| `Lucy, open Bugatti`               | Opens the configured Bugatti media link |
+| `Lucy, what is quantum computing?` | Generates and speaks a Gemini response  |
 
-The available commands depend on the actions and services configured in the project.
+---
 
-Troubleshooting
+## Security
 
-Lucy cannot hear you: Confirm that the correct microphone is selected and that terminal microphone permission is enabled.
+Keep credentials outside the source code. Add the following entries to `.gitignore`:
 
-No voice response: Check the system volume and verify that a text-to-speech voice is available.
-
-A web or AI command fails: Confirm the internet connection and check the values in .env.
-
-A module is missing: Reactivate the virtual environment and rerun python -m pip install -r requirements.txt.
-
-Security
-
-Keep API keys, tokens, passwords, and other secrets in .env. At minimum, ensure .gitignore contains:
-
+```gitignore
 .env
 .venv/
 __pycache__/
 *.py[cod]
+```
+
+Access the Gemini key through the environment:
+
+```python
+import os
+
+gemini_api_key = os.getenv("GEMINI_API_KEY")
+```
+
+Never commit API keys, passwords, or access tokens.
+
+---
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
