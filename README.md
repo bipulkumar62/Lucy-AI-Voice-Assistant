@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🎙️ Lucy — AI Voice Assistant
+# 🎙️ Lucy - AI Voice Assistant
 
 A lightweight Python voice assistant powered by **Google Gemini 2.5 Flash**, voice recognition, browser automation, and text-to-speech.
 
